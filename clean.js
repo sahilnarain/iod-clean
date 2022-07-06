@@ -2,13 +2,14 @@
 
 const fs = require('fs');
 
-const BASE_DIR = '/Users/sahil/Desktop/temp';
+const BASE_DIR = process.cwd();
 
 let files = fs.readdirSync(BASE_DIR + '/dataset');
 
-console.log(files);
+let imageFileExt = '.jpg';
 
-const imageRegex = /\.jpeg$/;
+const imageRegex = eval(`/\\${imageFileExt}$/`);
+console.log(imageRegex);
 const txtRegex = /\.txt$/;
 
 let images = files.filter((file) => imageRegex.test(file));
@@ -23,12 +24,12 @@ let ctr = 0;
 images.forEach((image) => {
   let filename = image.replace(imageRegex, '');
 
-  let imageFilename = BASE_DIR + '/dataset/' + filename + '.jpeg';
-  let newImageFilename = BASE_DIR + '/final/' + filename + '.jpeg';
+  let imageFilename = BASE_DIR + '/dataset/' + filename + imageFileExt;
+  let newImageFilename = BASE_DIR + '/final/' + filename + imageFileExt;
   let txtFilename = BASE_DIR + '/dataset/' + filename + '.txt';
   let newTxtFilename = BASE_DIR + '/final/' + filename + '.txt';
 
-  console.log(imageFilename, txtFilename);
+  console.log(imageFilename, '=>', txtFilename);
 
   if (fs.existsSync(imageFilename) && fs.existsSync(txtFilename)) {
     let content = fs.readFileSync(txtFilename).toString();
